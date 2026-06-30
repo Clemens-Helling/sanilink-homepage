@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SaniLink — Ein System. Jeder Einsatz.</title>
+<link rel="icon" type="image/png" href="sanilink-logo.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -27,6 +28,7 @@
     color:var(--navy);
     background:var(--white);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   h1,h2,h3{
     font-family:'Space Grotesk',sans-serif;
@@ -35,12 +37,12 @@
   }
   .mono{font-family:'JetBrains Mono',monospace;}
   a{color:inherit;text-decoration:none;}
-  img,svg{display:block;}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  img,svg{display:block;max-width:100%;height:auto;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,28px);}
   :focus-visible{outline:3px solid var(--red);outline-offset:3px;}
 
   /* ---------- Logo mark ---------- */
-  .logomark{width:30px;height:30px;flex-shrink:0;}
+  .logomark{width:30px;height:30px;flex-shrink:0;object-fit:contain;}
 
   /* ---------- Header ---------- */
   header{
@@ -54,7 +56,6 @@
     padding:16px 28px;max-width:var(--maxw);margin:0 auto;
   }
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;color:var(--navy);}
-  .brand .logomark{color:var(--red);}
   .navlinks{display:flex;align-items:center;gap:30px;font-size:0.95rem;font-weight:500;color:var(--navy);}
   .navlinks a{opacity:0.8;transition:opacity .15s;}
   .navlinks a:hover{opacity:1;color:var(--red);}
@@ -77,21 +78,22 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;overflow:hidden;
-    padding:72px 0 60px;
+    padding:clamp(48px,10vw,72px) 0 clamp(40px,8vw,60px);
   }
   .hero-blob{
-    position:absolute;top:-180px;right:-220px;width:560px;height:560px;
+    position:absolute;top:-140px;right:-200px;width:320px;height:320px;
     background:var(--red);border-radius:48% 52% 60% 40% / 50% 45% 55% 50%;
     opacity:0.95;z-index:0;
+  }
+  @media (min-width:680px){
+    .hero-blob{top:-180px;right:-220px;width:560px;height:560px;}
   }
   .hero-grid{
     position:relative;z-index:1;
     display:grid;gap:48px;
     grid-template-columns:1fr;
   }
-  @media (min-width:920px){
-    .hero-grid{grid-template-columns:1.1fr 0.9fr;align-items:center;}
-  }
+  .hero-copy{max-width:680px;}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-family:'JetBrains Mono',monospace;font-size:0.78rem;
@@ -114,42 +116,28 @@
   .hero-actions .btn-primary{padding:14px 26px;font-size:0.98rem;}
   .hero-actions .btn-ghost{padding:14px 22px;}
 
-  /* live readout card */
-  .readout-card{
-    background:var(--navy);color:var(--white);
-    border-radius:var(--radius);padding:26px 26px 22px;
-    box-shadow:0 30px 60px -20px rgba(13,28,47,0.45);
-    position:relative;
+  /* ---------- Stats row ---------- */
+  .stat-row{display:grid;gap:18px;grid-template-columns:1fr;margin-top:8px;}
+  @media (min-width:760px){.stat-row{grid-template-columns:repeat(3,1fr);}}
+  .stat-card{
+    background:var(--navy-soft);border-radius:16px;padding:28px 24px;
+    display:flex;flex-direction:column;gap:14px;
   }
-  .readout-head{
-    display:flex;align-items:center;justify-content:space-between;
-    margin-bottom:18px;font-size:0.74rem;letter-spacing:0.08em;
-    text-transform:uppercase;color:#9FB0C2;font-weight:500;
+  .stat-card-accent{background:var(--red);}
+  .stat-card-muted{opacity:0.7;}
+  .stat-num{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:2.6rem;line-height:1;color:var(--white);
   }
-  .live-pill{display:inline-flex;align-items:center;gap:6px;color:var(--red);}
-  .live-pill .pulse{
-    width:8px;height:8px;border-radius:50%;background:var(--red);
-    box-shadow:0 0 0 0 rgba(235,71,61,0.7);
-    animation:pulseDot 1.8s infinite;
-  }
-  @keyframes pulseDot{
-    0%{box-shadow:0 0 0 0 rgba(235,71,61,0.55);}
-    70%{box-shadow:0 0 0 9px rgba(235,71,61,0);}
-    100%{box-shadow:0 0 0 0 rgba(235,71,61,0);}
-  }
-  .readout-line{
-    display:flex;gap:14px;padding:10px 0;
-    border-bottom:1px solid rgba(255,255,255,0.08);
-    font-size:0.86rem;
-  }
-  .readout-line:last-child{border-bottom:none;padding-bottom:0;}
-  .readout-time{color:#7E91A6;flex-shrink:0;}
-  .readout-text{color:#EAF0F6;}
-  .readout-text strong{color:var(--white);}
+  .stat-num .stat-unit{font-size:1.3rem;font-weight:600;margin-left:2px;color:#FF8077;}
+  .stat-card-accent .stat-num .stat-unit{color:rgba(255,255,255,0.8);}
+  .stat-label{font-size:0.92rem;color:#C9D4E0;line-height:1.55;}
+  .stat-card-accent .stat-label{color:rgba(255,255,255,0.92);}
+  .stat-sub{font-size:0.82rem;color:#8FA2B6;font-family:'JetBrains Mono',monospace;}
 
   /* ---------- Section heading shared ---------- */
-  .section{padding:84px 0;}
-  .section-tight{padding:60px 0;}
+  .section{padding:clamp(48px,9vw,84px) 0;}
+  .section-tight{padding:clamp(40px,7vw,60px) 0;}
   .sec-head{max-width:620px;margin-bottom:48px;}
   .sec-tag{
     font-family:'JetBrains Mono',monospace;font-size:0.76rem;
@@ -253,7 +241,7 @@
   @media (min-width:760px){.split{grid-template-columns:1fr 1fr;}}
   .split-card{
     border:1.5px solid var(--gray-line);border-radius:var(--radius);
-    padding:32px 28px;
+    padding:clamp(24px,5vw,32px) clamp(20px,4vw,28px);
   }
   .split-card.is-red{border-color:transparent;background:var(--navy);color:var(--white);}
   .split-tag{
@@ -272,24 +260,52 @@
   .split-list li svg{width:16px;height:16px;color:var(--red);flex-shrink:0;margin-top:3px;}
   .split-card.is-red .split-list li svg{color:#FF8077;}
 
-  /* ---------- Final CTA ---------- */
-  .cta-band{
-    background:var(--red-tint);border-radius:28px;
-    padding:56px 32px;text-align:center;margin:0 28px;
+  /* ---------- Kontakt / contact form ---------- */
+  .contact-band{
+    background:var(--red-tint);border-radius:24px;
+    padding:clamp(28px,6vw,48px) clamp(18px,5vw,28px);display:grid;gap:32px;
   }
-  @media (min-width:760px){.cta-band{padding:64px 60px;}}
-  .cta-band h2{font-size:clamp(1.7rem,3.6vw,2.4rem);color:var(--navy);margin-bottom:16px;}
-  .cta-band p{color:var(--gray);margin-bottom:28px;font-size:1.02rem;}
+  @media (min-width:760px){.contact-band{padding:56px 48px;}}
+  @media (min-width:920px){
+    .contact-band{grid-template-columns:0.9fr 1.1fr;align-items:start;}
+  }
+  .contact-intro h2{font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--navy);margin:12px 0 14px;}
+  .contact-intro p{color:var(--gray);font-size:1.01rem;line-height:1.6;}
   .cta-note{
     margin-top:18px;font-size:0.84rem;color:var(--gray);
     font-family:'JetBrains Mono',monospace;
   }
+  .contact-form{
+    display:flex;flex-direction:column;gap:16px;background:var(--white);
+    border-radius:16px;padding:clamp(20px,5vw,28px);border:1px solid var(--gray-line);
+  }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{
+    font-size:0.82rem;font-weight:600;color:var(--navy);
+  }
+  .field input,.field textarea{
+    font-family:'Inter',sans-serif;font-size:0.95rem;color:var(--navy);
+    border:1.5px solid var(--gray-line);border-radius:10px;
+    padding:11px 14px;background:var(--white);
+    transition:border-color .15s ease;resize:vertical;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--red);}
+  .field input::placeholder,.field textarea::placeholder{color:#A8B0BA;}
+  .contact-submit{
+    width:100%;justify-content:center;padding:14px 22px;font-size:0.98rem;margin-top:4px;
+  }
+  .contact-submit[disabled]{opacity:0.65;cursor:not-allowed;}
+  .contact-status{
+    margin:4px 0 0;font-size:0.88rem;min-height:1.2em;
+  }
+  .contact-status.is-success{color:#1F8A4C;}
+  .contact-status.is-error{color:var(--red-dark);}
 
   /* ---------- Footer ---------- */
   footer{padding:56px 0 36px;border-top:1px solid var(--gray-line);margin-top:80px;}
   .footer-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:center;}
   .footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--navy);}
-  .footer-brand .logomark{color:var(--red);width:24px;height:24px;}
+  .footer-brand .logomark{width:24px;height:24px;}
   .footer-links{display:flex;gap:24px;font-size:0.9rem;color:var(--gray);}
   .footer-links a:hover{color:var(--red);}
   .footer-meta{margin-top:24px;font-size:0.82rem;color:#9AA4AF;font-family:'JetBrains Mono',monospace;}
@@ -308,13 +324,7 @@
 <header>
   <nav class="nav">
     <a href="#top" class="brand">
-      <svg class="logomark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M16 8C10 8 6 12.5 6 18c0 4 2.2 6.6 4.4 8.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-        <path d="M32 40c6 0 10-4.5 10-10 0-4-2.2-6.6-4.4-8.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-        <path d="M10.4 26.4C12 28 14 29 16 29h16c2 0 4-1 5.6-2.6" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity="0"/>
-        <rect x="20" y="16" width="8" height="16" rx="2" fill="currentColor"/>
-        <rect x="16" y="20" width="16" height="8" rx="2" fill="currentColor"/>
-      </svg>
+      <img class="logomark" src="sanilink-logo.jpeg" alt="SaniLink Logo" width="30" height="30">
       SaniLink
     </a>
     <div class="navlinks">
@@ -322,9 +332,9 @@
         <a href="#kette">So funktioniert's</a>
         <a href="#features">Funktionen</a>
         <a href="#fuer-wen">Für wen</a>
-        <a href="#datenschutz">Datenschutz</a>
+        <a href="#datenschutz">Sicherheit</a>
       </div>
-      <a href="#demo" class="btn btn-primary navcta">Demo anfordern</a>
+      <a href="#kontakt" class="btn btn-primary navcta">Demo anfordern</a>
     </div>
   </nav>
 </header>
@@ -335,38 +345,13 @@
   <section class="hero">
     <div class="hero-blob" aria-hidden="true"></div>
     <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Für Unternehmen &amp; Schulen</span>
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span>Für Schulsanitätsdienste &amp; Unternehmen</span>
         <h1 class="headline">Ein System.<em>Jeder Einsatz.</em></h1>
-        <p class="lede">SaniLink bündelt Alarmierung, Einsatzdokumentation und Materialmanagement in einer App — entwickelt für Sanitätsdienste, die im Ernstfall keine Zeit mit Formularen verlieren wollen.</p>
+        <p class="lede">SaniLink bündelt Alarmierung, Einsatzdokumentation und Materialmanagement in einer App. Ein Alarm lässt sich in Sekunden auslösen — notfalls auch ganz ohne Patientennamen, wenn jede Sekunde zählt.</p>
         <div class="hero-actions">
-          <a href="#demo" class="btn btn-primary">Demo anfordern</a>
+          <a href="#kontakt" class="btn btn-primary">Demo anfordern</a>
           <a href="#kette" class="btn btn-ghost">So funktioniert's ↓</a>
-        </div>
-      </div>
-
-      <div class="readout-card reveal">
-        <div class="readout-head">
-          <span>Aktueller Einsatz</span>
-          <span class="live-pill"><span class="pulse"></span>LIVE</span>
-        </div>
-        <div class="mono">
-          <div class="readout-line">
-            <span class="readout-time">08:42:13</span>
-            <span class="readout-text">Alarm-Code <strong>SL-2291</strong> ausgelöst</span>
-          </div>
-          <div class="readout-line">
-            <span class="readout-time">08:42:19</span>
-            <span class="readout-text">Nächster Ersthelfer <strong>benachrichtigt</strong></span>
-          </div>
-          <div class="readout-line">
-            <span class="readout-time">08:43:02</span>
-            <span class="readout-text">Status: <strong>vor Ort</strong></span>
-          </div>
-          <div class="readout-line">
-            <span class="readout-time">08:51:47</span>
-            <span class="readout-text">Dokumentation <strong>abgeschlossen</strong></span>
-          </div>
         </div>
       </div>
     </div>
@@ -389,7 +374,7 @@
           </div>
           <span class="chain-num">01</span>
           <h3>Alarmierung</h3>
-          <p>Schon bei der Alarmierung werden nach möglichkeit die wichtigsten Daten erfasst und der Ersthelfer per App alarmiert</p>
+          <p>Ein Tipp genügt — auch ganz ohne Namen, wenn es schnell gehen muss. Die Benachrichtigung läuft wahlweise über Divera 24/7 oder ntfy.</p>
         </div>
         <div class="chain-node">
           <div class="chain-fill"></div>
@@ -397,8 +382,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <span class="chain-num">02</span>
-          <h3>Dokumentation</h3>
-          <p>Das Einsatzprotokoll ist in unter einer Minute abgeschlossen und alle wichtigen Daten erfasst.</p>
+          <h3>Anmeldung &amp; Status</h3>
+          <p>Per RFID-Karte am eigens entwickelten Lesegerät anmelden — funktioniert an Raspberry Pi und jedem handelsüblichen PC.</p>
         </div>
         <div class="chain-node">
           <div class="chain-fill"></div>
@@ -406,98 +391,179 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6M9 16h6M9 8h6"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg>
           </div>
           <span class="chain-num">03</span>
-          <h3>Materialmanagement</h3>
-          <p>Die Verbrauchten Materialien sind ebenfalls schnell erfasst und die Einsatzleitung hat den Perfekten überblick über alle Bestände</p>
+          <h3>Dokumentation</h3>
+          <p>Maßnahmen, Vitalwerte und verbrauchtes Material erfassen — im Schnitt in 34,3 Sekunden statt auf Papier.</p>
         </div>
         <div class="chain-node">
           <div class="chain-dot">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M3 7l2-4h14l2 4"/><path d="M10 12h4"/></svg>
           </div>
           <span class="chain-num">04</span>
-          <h3>Archivierung</h3>
-          <p>Verschlüsselt abgelegt, DSGVO-konform und jederzeit nachvollziehbar abrufbar.</p>
+          <h3>Übergabe &amp; Archiv</h3>
+          <p>Per PDF-Export an den Rettungsdienst übergeben oder verschlüsselt im System archivieren.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT + FEATURES -->
+  <!-- STATS: gemessener Zeitaufwand -->
+  <section class="section-tight" style="background:var(--navy);color:var(--white);">
+    <div class="wrap">
+      <div class="sec-head reveal" style="max-width:680px;">
+        <span class="sec-tag" style="color:#FF8077;">Gemessen, nicht geschätzt</span>
+        <h2 style="color:var(--white);">41 % schneller als das Papierprotokoll</h2>
+        <p style="color:#C9D4E0;">Im direkten Vergleich von zehn fiktiven Einsätzen — einmal mit SaniLink, einmal mit dem analogen Formular, das aktuell an Schulen verwendet wird.</p>
+      </div>
+      <div class="stat-row reveal">
+        <div class="stat-card">
+          <span class="stat-num">45,9<span class="stat-unit">s</span></span>
+          <span class="stat-label">⌀ Alarmierung + Protokollierung mit SaniLink<br><span class="stat-sub">davon 11,5 s Alarmierung · 34,3 s Dokumentation</span></span>
+        </div>
+        <div class="stat-card stat-card-muted">
+          <span class="stat-num">78<span class="stat-unit">s</span></span>
+          <span class="stat-label">⌀ Bearbeitungszeit mit dem analogen Papierprotokoll</span>
+        </div>
+        <div class="stat-card stat-card-accent">
+          <span class="stat-num">−32<span class="stat-unit">s</span></span>
+          <span class="stat-label">eingesparte Zeit pro Einsatz — Schüler:innen schneller zurück im Unterricht</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <section class="section" id="features" style="background:#FBFAF9;border-top:1px solid var(--gray-line);border-bottom:1px solid var(--gray-line);">
     <div class="wrap about-grid">
       <div class="reveal">
         <span class="sec-tag">Über SaniLink</span>
         <h2>Weniger Verwaltung, mehr Versorgung</h2>
-        <p>SaniLink erleichtert die Arbeit von Sanitätsdiensten in Unternehmen und Bildungseinrichtungen. Durch die intelligente Kombination von Alarmierung, Einsatzdokumentation und Materialmanagement spart SaniLink Zeit, reduziert den Verwaltungsaufwand und senkt Kosten.</p>
+        <p>SaniLink erleichtert die Arbeit von Schulsanitätsdiensten und betrieblichen Ersthelfer-Teams. Durch die Kombination aus Alarmierung, Einsatzdokumentation und Materialmanagement sparen SanitäterInnen im Schnitt 41&nbsp;% der bisherigen Bearbeitungszeit — und sind schneller wieder einsatzbereit. Das System läuft plattformübergreifend auf Raspberry Pi, Windows, macOS und Linux.</p>
       </div>
       <div class="feat-grid reveal">
         <div class="feat-card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          <h3>Alarmierung per App</h3>
-          <p>Einfache Alarmierung über etablierte Systeme wie Divera24/7</p>
+          <h3>Alarmierung ohne Namen</h3>
+          <p>Auch ohne Patientendaten sofort Hilfe rufen — Pseudonymisierung macht's möglich, per Divera 24/7 oder ntfy.</p>
         </div>
         <div class="feat-card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6M9 16h6M9 8h6"/><rect x="5" y="3" width="14" height="18" rx="2"/></svg></div>
-          <h3>Schnelle Dokumentation</h3>
-          <p>Einsatzprotokolle in unter einer Minute erstellen — strukturiert statt handschriftlich.</p>
+          <h3>PDF-Export</h3>
+          <p>Einsatzprotokoll als PDF speichern und direkt an den Rettungsdienst übergeben — mit wenigen Klicks.</p>
         </div>
         <div class="feat-card">
           <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l3-4h12l3 4"/><path d="M9 12h6"/></svg></div>
-          <h3>Materialmanagement</h3>
-          <p>Bestände, Verfallsdaten und Nachbestellungen für jeden Standort im Blick.</p>
+          <h3>Lagersystem</h3>
+          <p>Bestände und Mindesthaltbarkeitsdaten im Blick — nach jedem Einsatz automatisch aktualisiert.</p>
         </div>
         <div class="feat-card">
-          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-          <h3>DSGVO-konform</h3>
-          <p>Patientendaten Ende-zu-Ende verschlüsselt, Schlüssel bleiben bei Ihnen.</p>
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+          <h3>RFID-Anmeldung</h3>
+          <p>Eigens entwickeltes Kartenlesegerät für unter 10&nbsp;€ — per USB an jedem PC oder Pogo-Pins am Raspberry Pi.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- TRUST BAND -->
-
+  <section class="trust" id="datenschutz">
+    <div class="wrap section-tight">
+      <div class="trust-row reveal">
+        <div class="trust-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+          <span>SSL-verschlüsseltes<br>Logging</span>
+        </div>
+        <div class="trust-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <span>Geräte­spezifische<br>Schlüsselpaare</span>
+        </div>
+        <div class="trust-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
+          <span>Manipulations­erkennung<br>per Sequenznummer</span>
+        </div>
+        <div class="trust-item">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01"/></svg></div>
+          <span>Läuft auf Pi, Windows,<br>macOS &amp; Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- AUDIENCE SPLIT -->
   <section class="section" id="fuer-wen">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="sec-tag">Für wen</span>
-        <h2>Ein System, zwei Welten</h2>
-        <p>Ob Werksgelände oder Schulhof — SaniLink passt sich der Struktur Ihrer Einrichtung an.</p>
+        <h2>Im Einsatz an Schulen — als Nächstes für Unternehmen</h2>
+        <p>SaniLink ist heute im Schulsanitätsdienst im Einsatz. Der nächste Schritt: First-Responder-Teams in Unternehmen.</p>
       </div>
       <div class="split reveal">
-        <div class="split-card is-red">
-          <span class="split-tag">Für Unternehmen</span>
-          <h3>Werksanitätsdienst &amp; Arbeitsschutz</h3>
-          <p>Erste-Hilfe-Teams behalten über mehrere Standorte hinweg den Überblick — auditfest und immer aktuell.</p>
+        <div class="split-card">
+          <span class="split-tag">Im Einsatz</span>
+          <h3>Schulsanitätsdienst</h3>
+          <p>Schüler-Ersthelfer dokumentieren Einsätze direkt vor Ort — getestet im direkten Vergleich zum Papierprotokoll, mit 41&nbsp;% Zeitersparnis pro Einsatz.</p>
           <ul class="split-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Nachweise für Berufsgenossenschaft &amp; Audit</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Mehrere Standorte, eine Übersicht</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Schichtpläne für Ersthelfer</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Einfache RFID-Anmeldung für Schüler-Teams</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Eltern-Benachrichtigung im Protokoll vermerken</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Hardwarekosten ab ca. 9,83&nbsp;€ pro Kartenleser</li>
           </ul>
         </div>
-        <div class="split-card">
-          <span class="split-tag">Für Bildungseinrichtungen</span>
-          <h3>Schulsanitätsdienst</h3>
-          <p>Schüler-Ersthelfer dokumentieren Einsätze direkt am Unfallort — das Sekretariat wird von Papierprotokollen entlastet.</p>
+        <div class="split-card is-red">
+          <span class="split-tag">In Vorbereitung</span>
+          <h3>Werksanitätsdienst &amp; Arbeitsschutz</h3>
+          <p>Geplante Erweiterung für betriebliche First-Responder-Teams — inklusive Anbindung an Zeiterfassungssysteme wie SAP.</p>
           <ul class="split-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Einfache Bedienung für Schüler-Teams</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Elterninformation auf Knopfdruck</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Verwaltung ohne Papierordner</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Lückenlose Einsatzdokumentation für Audits</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Geplante SAP-Anbindung zur Zeiterfassung</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>Mehrere Standorte, eine Übersicht</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <section class="section-tight" id="demo">
+  <!-- KONTAKT -->
+  <section class="section-tight" id="kontakt">
     <div class="wrap">
-      <div class="cta-band reveal">
-        <h2>Bereit für den nächsten Einsatz?</h2>
-        <p>Zeigen wir Ihnen SaniLink an Ihrem eigenen Beispiel — Schule oder Unternehmen.</p>
-        <a href="#" class="btn btn-primary">Demo anfordern</a>
-        <div class="cta-note">Keine Kreditkarte nötig · Antwort innerhalb von 24h</div>
+      <div class="contact-band reveal">
+        <div class="contact-intro">
+          <span class="sec-tag">Kontakt</span>
+          <h2>Bereit für den nächsten Einsatz?</h2>
+          <p>Schreiben Sie uns — wir zeigen Ihnen SaniLink an Ihrem eigenen Beispiel, ob Schule oder Unternehmen.</p>
+          <div class="cta-note">Antwort in der Regel innerhalb von 24h</div>
+        </div>
+
+        <form id="contactForm" class="contact-form" novalidate>
+          <!-- Ersetzen Sie diesen Wert durch Ihren eigenen Access Key von web3forms.com -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+          <input type="hidden" name="subject" value="Neue Anfrage über die SaniLink Website">
+          <input type="text" name="botcheck" class="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Ihr Name">
+          </div>
+
+          <div class="field">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" required placeholder="name@beispiel.de">
+          </div>
+
+          <div class="field">
+            <label for="organisation">Schule oder Unternehmen</label>
+            <input type="text" id="organisation" name="organisation" placeholder="z. B. Alemannenschule Wutöschingen">
+          </div>
+
+          <div class="field">
+            <label for="message">Nachricht</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Wie können wir helfen?"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary contact-submit">
+            <span class="btn-label">Nachricht senden</span>
+          </button>
+
+          <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </section>
@@ -508,21 +574,16 @@
   <div class="wrap">
     <div class="footer-row">
       <a href="#top" class="footer-brand">
-        <svg class="logomark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M16 8C10 8 6 12.5 6 18c0 4 2.2 6.6 4.4 8.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <path d="M32 40c6 0 10-4.5 10-10 0-4-2.2-6.6-4.4-8.4" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-          <rect x="20" y="16" width="8" height="16" rx="2" fill="currentColor"/>
-          <rect x="16" y="20" width="16" height="8" rx="2" fill="currentColor"/>
-        </svg>
+        <img class="logomark" src="sanilink-logo.png" alt="SaniLink Logo" width="24" height="24">
         SaniLink
       </a>
       <div class="footer-links">
-        <a href="#datenschutz">Datenschutz</a>
+        <a href="#datenschutz">Sicherheit</a>
         <a href="#">Impressum</a>
-        <a href="#demo">Kontakt</a>
+        <a href="#kontakt">Kontakt</a>
       </div>
     </div>
-    <div class="footer-meta">© 2026 SaniLink · sanilink.app</div>
+    <div class="footer-meta">© 2026 SaniLink · Entwickelt im Rahmen von Jugend forscht, Alemannenschule Wutöschingen</div>
   </div>
 </footer>
 
@@ -551,6 +612,56 @@
       });
     }, { threshold: 0.25 });
     chainIo.observe(chain);
+  }
+
+  // Contact form — web3forms submission (AJAX, no page reload)
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    const statusEl = document.getElementById('contactStatus');
+    const submitBtn = contactForm.querySelector('.contact-submit');
+    const submitLabel = submitBtn.querySelector('.btn-label');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const accessKey = contactForm.access_key.value;
+      if (!accessKey || accessKey === '9b23bc27-ed07-471c-b1f3-2d03055d5601') {
+        statusEl.textContent = 'Bitte zuerst einen gültigen web3forms Access Key in der Seite hinterlegen.';
+        statusEl.className = 'contact-status is-error';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Wird gesendet …';
+      statusEl.textContent = '';
+      statusEl.className = 'contact-status';
+
+      const formData = new FormData(contactForm);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          statusEl.textContent = 'Danke! Ihre Nachricht wurde gesendet — wir melden uns in Kürze.';
+          statusEl.className = 'contact-status is-success';
+          contactForm.reset();
+        } else {
+          throw new Error(result.message || 'Senden fehlgeschlagen.');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Beim Senden ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.';
+        statusEl.className = 'contact-status is-error';
+      } finally {
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'Nachricht senden';
+      }
+    });
   }
 </script>
 
