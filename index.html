@@ -625,11 +625,7 @@
       e.preventDefault();
 
       const accessKey = contactForm.access_key.value;
-if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
-  statusEl.textContent = 'Bitte zuerst einen gültigen web3forms Access Key in der Seite hinterlegen.';
-  statusEl.className = 'contact-status is-error';
-  return;
-}
+
 
 
       submitBtn.disabled = true;
