@@ -625,11 +625,12 @@
       e.preventDefault();
 
       const accessKey = contactForm.access_key.value;
-      if (!accessKey || accessKey ==="9b23bc27-ed07-471c-b1f3-2d03055d5601") {
-        statusEl.textContent = 'Bitte zuerst einen gültigen web3forms Access Key in der Seite hinterlegen.';
-        statusEl.className = 'contact-status is-error';
-        return;
-      }
+if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+  statusEl.textContent = 'Bitte zuerst einen gültigen web3forms Access Key in der Seite hinterlegen.';
+  statusEl.className = 'contact-status is-error';
+  return;
+}
+
 
       submitBtn.disabled = true;
       submitLabel.textContent = 'Wird gesendet …';
